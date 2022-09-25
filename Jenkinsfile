@@ -21,7 +21,7 @@ pipeline {
         }
       stage('Docker build and push') {
             steps {
-              bat 'docker build -t vignesh0590/numeric-app:""$GIT_CIMMIT"" .'
+              bat 'docker build -t vignesh0590/numeric-app:""$GIT_COMMIT"" .'
               bat 'docker push vignesh0590/numeric-app:""$GIT_COMMIT""'
             }
 
