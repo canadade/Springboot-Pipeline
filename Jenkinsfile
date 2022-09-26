@@ -21,9 +21,9 @@ pipeline {
         }
       stage('Docker build and push') {
             steps {
-              withDockerRegistry([credentialsId: "docker-hub-credentials",url: ""]) {   
-                  bat 'docker build -t vignesh0590/numeric-app:""$GIT_COMMIT"" .'
-                  bat 'docker push vignesh0590/numeric-app:""$GIT_COMMIT""'
+              withDockerRegistry([credentialsId: "docker-hub-credentials", url: ""]) {   
+                  bat 'docker build -t vignesh0590/numeric-app:latest .'
+                  bat 'docker push vignesh0590/numeric-app:latest'
                   }
             }
 
