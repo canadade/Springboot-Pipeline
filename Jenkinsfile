@@ -28,5 +28,15 @@ pipeline {
             }
 
       }   
+      stage('Deploy to Kubernetes'){
+            steps{
+              script{
+                kubeconfig(credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443') {
+                    bat'kubectl apply -f k8s_deployment_service.yaml --insecure-skip-tls-verify'
+                }
+            }
+            
+       }
+    }
     }
 }
