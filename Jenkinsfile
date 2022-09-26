@@ -21,12 +21,22 @@ pipeline {
         }
       stage('Docker build and push') {
             steps {
-              withDockerRegistry([credentialsId: "docker-hub-credentials",url: ""]) {   
-                  bat 'docker build -t vignesh0590/numeric-app:""$GIT_COMMIT"" .'
-                  bat 'docker push vignesh0590/numeric-app:""$GIT_COMMIT""'
+              withDockerRegistry([credentialsId: "docker-hub-credentials", url: ""]) {   
+                  bat 'docker build -t vignesh0590/numeric-app:latest .'
+                  bat 'docker push vignesh0590/numeric-app:latest'
                   }
             }
 
       }   
+      stage('Deploy to Kubernetes'){
+            steps{
+              script{
+                kubeconfig(credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.docker.internal:6443') {
+                    bat'kubectl apply -f k8s_deployment_service.yaml --insecure-skip-tls-verify'
+                }
+            }
+            
+       }
+    }
     }
 }
